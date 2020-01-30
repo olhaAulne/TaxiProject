@@ -34,6 +34,11 @@ public class OrderDaoImpl extends AbstractCrudDaoImpl<Order> implements OrderDao
     }
 
     @Override
+    public double countAmount(Order order) {
+        return 0;
+    }
+
+    @Override
     protected Order mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         return null;
     }

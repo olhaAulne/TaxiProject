@@ -13,7 +13,7 @@ public class ApplicationInjector {
 
     private static final Validator<User> USER_VALIDATOR = new UserValidator();
 
-    private static final PasswordEncryptor PASSWORD_ENCRIPTOR = new PasswordEncryptor();
+    private static final PasswordEncryptor PASSWORD_ENCRYPTOR = new PasswordEncryptor();
 
     private static final ConnectorDB CONNECTOR = new ConnectorDB("database");
 
@@ -26,19 +26,4 @@ public class ApplicationInjector {
         return INSTANCE;
     }
 
-    public static Validator<User> getUserValidator() {
-        return USER_VALIDATOR;
-    }
-
-    public static PasswordEncryptor getPasswordEncriptor() {
-        return PASSWORD_ENCRIPTOR;
-    }
-
-    public static ConnectorDB getCONNECTOR() {
-        return CONNECTOR;
-    }
-
-    public static UserDao getUserRepository() {
-        return USER_REPOSITORY;
-    }
 }

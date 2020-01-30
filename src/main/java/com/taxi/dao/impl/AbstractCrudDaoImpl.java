@@ -1,6 +1,6 @@
 package com.taxi.dao.impl;
 
-import com.taxi.dao.ConnectorDB;
+import com.taxi.dao.C3poDataSource;
 import com.taxi.dao.CrudDao;
 import com.taxi.dao.exception.DataBaseSqlRuntimeException;
 import org.apache.logging.log4j.LogManager;
@@ -17,14 +17,14 @@ import java.util.function.BiConsumer;
 
 public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
     private static final Logger LOGGER = LogManager.getLogger(AbstractCrudDaoImpl.class);
-    protected final ConnectorDB connector;
+    protected final C3poDataSource connector;
     private final String findByIdQuery;
     private final String findAllQuery;
     private final String saveQuery;
     private final String updateQuery;
     private final String deleteQuery;
 
-    public AbstractCrudDaoImpl(ConnectorDB connector, String findByIdQuery, String findAllQuery, String saveQuery, String updateQuery, String deleteQuery) {
+    public AbstractCrudDaoImpl(C3poDataSource connector, String findByIdQuery, String findAllQuery, String saveQuery, String updateQuery, String deleteQuery) {
         this.connector = connector;
         this.findByIdQuery = findByIdQuery;
         this.findAllQuery = findAllQuery;

@@ -1,5 +1,5 @@
 package com.taxi.entity;
 
 public enum OrderStatus {
-    CREATED, CONFIRM, CANCELED
+    CREATED, CONFIRM, CANCELED, DONE
 }

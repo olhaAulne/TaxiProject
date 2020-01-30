@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ConnectorDB {
+
     private final String url;
     private final String user;
     private final String password;
