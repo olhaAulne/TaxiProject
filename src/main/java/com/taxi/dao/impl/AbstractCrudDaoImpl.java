@@ -33,7 +33,6 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
         this.updateQuery = updateQuery;
         this.deleteQuery = deleteQuery;
         this.countQuery = countQuery;
-
     }
 
     protected abstract E mapResultSetToEntity(ResultSet resultSet) throws SQLException;

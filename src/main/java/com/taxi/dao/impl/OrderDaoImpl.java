@@ -1,8 +1,10 @@
 package com.taxi.dao.impl;
 
+import com.taxi.dao.AddressDao;
 import com.taxi.dao.C3poDataSource;
 import com.taxi.dao.ConnectorDB;
 import com.taxi.dao.OrderDao;
+import com.taxi.entity.Address;
 import com.taxi.entity.Order;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,27 +17,28 @@ import java.util.List;
 
 public class OrderDaoImpl extends AbstractCrudDaoImpl<Order> implements OrderDao {
 
-    private static final String FIND_BY_DATE_QUERY = "SELECT * FROM order WHERE date=?";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM order WHERE id=?";
     private static final String FIND_ALL_QUERY = "SELECT * FROM order";
     private static final String SAVE_QUERY = "INSERT INTO order (order_status, order_date, id_user, id_sale, " +
-            "id_tariff, car_number, id_address ) values(?, ?, ?,? ,?,? ,?)";
+            "id_tariff, id_car, id_address_from, id_address_to  ) values(?, ?, ?, ? ,?, ? ,?, ?)";
     private static final String UPDATE_QUERY = "UPDATE order SET order_status = ?, order_date = ?, id_user = ?, " +
-            "id_sale = ?, id_tariff =?, car_number = ?, id_address = ?   WHERE id = ?";
+            "id_sale = ?, id_tariff =?, id_car = ?, id_address_from = ?, id_address_to   WHERE id = ?";
     private static final String DELETE_BY_ID_QUERY = "DELETE FROM order WHERE id = ?";
+    private static final String COUNT_RECORD = "SELECT COUNT FROM order ";
     private static final Logger LOGGER = LogManager.getLogger(UserDaoImpl.class);
 
     public OrderDaoImpl(C3poDataSource connector) {
-        super(connector, FIND_BY_ID_QUERY, FIND_ALL_QUERY, SAVE_QUERY, SAVE_QUERY, DELETE_BY_ID_QUERY);
+        super(connector, FIND_BY_ID_QUERY, FIND_ALL_QUERY, SAVE_QUERY, SAVE_QUERY, DELETE_BY_ID_QUERY, COUNT_RECORD);
     }
 
-    @Override
-    public List<Order> findByDate(Date date) {
-        return null;
-    }
 
     @Override
     public double countAmount(Order order) {
+        return 0;
+    }
+
+    @Override
+    public double countDistance(AddressDao from, Address to) {
         return 0;
     }
 
