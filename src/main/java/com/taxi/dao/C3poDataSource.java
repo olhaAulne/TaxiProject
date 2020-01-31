@@ -20,9 +20,14 @@ public class C3poDataSource {
     private static final String PASSWORD = "db.password";
 
 
-    public C3poDataSource(String filename) throws PropertyVetoException {
+    public C3poDataSource(String filename)  {
         ResourceBundle resource = ResourceBundle.getBundle(filename);
-        COMBO_POOLED_DATA_SOURCE.setDriverClass(resource.getString(DRIVER));
+        try {
+            COMBO_POOLED_DATA_SOURCE.setDriverClass(resource.getString(DRIVER));
+        } catch (PropertyVetoException e) {
+            LOGGER.error("Driver represents an unacceptable value", e);
+            throw new DataBaseSqlRuntimeException("Connection failed", e);
+        }
         COMBO_POOLED_DATA_SOURCE.setJdbcUrl(resource.getString(URL));
         COMBO_POOLED_DATA_SOURCE.setUser(resource.getString(USER));
         COMBO_POOLED_DATA_SOURCE.setPassword(resource.getString(PASSWORD));

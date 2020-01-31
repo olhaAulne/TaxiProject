@@ -1,5 +1,6 @@
 package com.taxi.dao.impl;
 
+import com.taxi.dao.C3poDataSource;
 import com.taxi.dao.ConnectorDB;
 import com.taxi.dao.OrderDao;
 import com.taxi.entity.Order;
@@ -24,7 +25,7 @@ public class OrderDaoImpl extends AbstractCrudDaoImpl<Order> implements OrderDao
     private static final String DELETE_BY_ID_QUERY = "DELETE FROM order WHERE id = ?";
     private static final Logger LOGGER = LogManager.getLogger(UserDaoImpl.class);
 
-    public OrderDaoImpl(ConnectorDB connector) {
+    public OrderDaoImpl(C3poDataSource connector) {
         super(connector, FIND_BY_ID_QUERY, FIND_ALL_QUERY, SAVE_QUERY, SAVE_QUERY, DELETE_BY_ID_QUERY);
     }
 

@@ -5,15 +5,17 @@ import java.util.Objects;
 public class Car {
     private final String id;
     private final String description;
-    private final String model;
-    private final String color;
+    private final String number;
+    private final String driverNumber;
+    private final int seat;
     private final boolean availability;
 
     public Car(Builder builder) {
         this.id = builder.id;
         this.description = builder.description;
-        this.model = builder.model;
-        this.color = builder.color;
+        this.number = builder.number;
+        this.driverNumber = builder.driverNumber;
+        this.seat = builder.seat;
         this.availability = builder.availability;
     }
 
@@ -25,12 +27,16 @@ public class Car {
         return description;
     }
 
-    public String getModel() {
-        return model;
+    public String getNumber() {
+        return number;
     }
 
-    public String getColor() {
-        return color;
+    public String getDriverNumber() {
+        return driverNumber;
+    }
+
+    public int getSeat() {
+        return seat;
     }
 
     public boolean isAvailability() {
@@ -39,19 +45,24 @@ public class Car {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Car car = (Car) o;
-        return  availability == car.availability &&
+        return seat == car.seat &&
+                availability == car.availability &&
                 Objects.equals(id, car.id) &&
                 Objects.equals(description, car.description) &&
-                Objects.equals(model, car.model) &&
-                Objects.equals(color, car.color);
+                Objects.equals(number, car.number) &&
+                Objects.equals(driverNumber, car.driverNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, model, color,  availability);
+        return Objects.hash(id, description, number, driverNumber, seat, availability);
     }
 
     @Override
@@ -59,8 +70,9 @@ public class Car {
         return "Car{" +
                 "id='" + id + '\'' +
                 ", description='" + description + '\'' +
-                ", model='" + model + '\'' +
-                ", color='" + color + '\'' +
+                ", number='" + number + '\'' +
+                ", driverNumber='" + driverNumber + '\'' +
+                ", seat=" + seat +
                 ", availability=" + availability +
                 '}';
     }
@@ -68,8 +80,9 @@ public class Car {
     public static class Builder {
         private String id;
         private String description;
-        private String model;
-        private String color;
+        private String number;
+        private String driverNumber;
+        private int seat;
         private boolean availability;
 
         private Builder() {
@@ -84,18 +97,23 @@ public class Car {
             return this;
         }
 
-        public Builder withMake(String description) {
+        public Builder withDescription(String description) {
             this.description = description;
             return this;
         }
 
-        public Builder withModel(String model) {
-            this.model = model;
+        public Builder withNumber(String number) {
+            this.number = number;
             return this;
         }
 
-        public Builder withColor(String color) {
-            this.color = color;
+        public Builder withDriverNumber(String driverNumber) {
+            this.driverNumber = driverNumber;
+            return this;
+        }
+
+        public Builder withSeat(int seat) {
+            this.seat = seat;
             return this;
         }
 

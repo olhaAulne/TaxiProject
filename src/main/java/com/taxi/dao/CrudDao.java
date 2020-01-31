@@ -8,10 +8,6 @@ public interface CrudDao<E> {
 
     Optional<E> findById(String id);
 
-    List<E> findAll();
-
-    long count();
-
     void update(E entity);
 
     void deleteById(String id);

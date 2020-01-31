@@ -3,57 +3,95 @@ package com.taxi.entity;
 import java.util.Objects;
 
 public class Address {
-    private String id;
-    private String departure;
-    private String arriving;
-    private double distance;
+    private final String id;
+    private final String address;
+    private final double latitude;
+    private final double longitude;
 
-    public Address(String id, String departure, String arriving, double distance) {
-        this.id = id;
-        this.departure = departure;
-        this.arriving = arriving;
-        this.distance = distance;
+    public Address(Builder builder) {
+        this.id = builder.id;
+        this.address = builder.address;
+        this.latitude = builder.latitude;
+        this.longitude = builder.longitude;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getDeparture() {
-        return departure;
+    public String getAddress() {
+        return address;
     }
 
-    public String getArriving() {
-        return arriving;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public double getDistance() {
-        return distance;
+    public double getLongitude() {
+        return longitude;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Address address = (Address) o;
-        return Double.compare(address.distance, distance) == 0 &&
-                Objects.equals(id, address.id) &&
-                Objects.equals(departure, address.departure) &&
-                Objects.equals(arriving, address.arriving);
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Address address1 = (Address) o;
+        return Double.compare(address1.latitude, latitude) == 0 &&
+                Double.compare(address1.longitude, longitude) == 0 &&
+                Objects.equals(id, address1.id) &&
+                Objects.equals(address, address1.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, departure, arriving, distance);
+        return Objects.hash(id, address, latitude, longitude);
     }
 
     @Override
     public String toString() {
         return "Address{" +
                 "id='" + id + '\'' +
-                ", departure='" + departure + '\'' +
-                ", arriving='" + arriving + '\'' +
-                ", distance=" + distance +
+                ", address='" + address + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
                 '}';
+    }
+
+    public static class Builder {
+        private String id;
+        private String address;
+        private double latitude;
+        private double longitude;
+
+        private Builder() {
+        }
+
+        public Address build() {
+            return new Address(this);
+        }
+
+        public Builder withId(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withAddress(String address) {
+            this.address = address;
+            return this;
+        }
+
+        public Builder withLatitude(double latitude) {
+            this.latitude = latitude;
+            return this;
+        }
+
+        public Builder withLongitude(double longitude) {
+            this.longitude = longitude;
+            return this;
+        }
     }
 }
