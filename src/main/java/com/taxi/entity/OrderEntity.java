@@ -1,8 +1,5 @@
 package com.taxi.entity;
 
-import java.time.Clock;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Objects;
 
 public class OrderEntity {
@@ -10,9 +7,8 @@ public class OrderEntity {
     private final UserEntity passenger;
     private final CarEntity car;
     private final SaleEntity sale;
-    private final DiscountEntity discount;
     private final OrderStatus status;
-    private final LocalDateTime dateTime;
+    private final String dateTime;
     private final AddressEntity addressFrom;
     private final AddressEntity addressTo;
     private final TariffEntity tariff;
@@ -22,9 +18,8 @@ public class OrderEntity {
         this.passenger = builder.passenger;
         this.car = builder.car;
         this.sale = builder.sale;
-        this.discount = builder.discount;
         this.status = builder.status;
-        this.dateTime = LocalDateTime.from(Clock.system(ZoneId.of("Europe/Kiev")).instant());
+        this.dateTime = builder.dateTime;
         this.addressFrom = builder.addressFrom;
         this.addressTo = builder.addressTo;
         this.tariff = builder.tariff;
@@ -50,11 +45,7 @@ public class OrderEntity {
         return status;
     }
 
-    public DiscountEntity getDiscount() {
-        return discount;
-    }
-
-    public LocalDateTime getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
@@ -83,7 +74,6 @@ public class OrderEntity {
                 Objects.equals(passenger, orderEntity.passenger) &&
                 Objects.equals(car, orderEntity.car) &&
                 Objects.equals(sale, orderEntity.sale) &&
-                Objects.equals(discount, orderEntity.discount) &&
                 status == orderEntity.status &&
                 Objects.equals(dateTime, orderEntity.dateTime) &&
                 Objects.equals(addressFrom, orderEntity.addressFrom) &&
@@ -93,7 +83,7 @@ public class OrderEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, passenger, car, sale, discount, status, dateTime, addressFrom, addressTo, tariff);
+        return Objects.hash(id, passenger, car, sale, status, dateTime, addressFrom, addressTo, tariff);
     }
 
     @Override
@@ -103,7 +93,6 @@ public class OrderEntity {
                 ", passenger=" + passenger +
                 ", car=" + car +
                 ", sale=" + sale +
-                ", discount=" + discount +
                 ", status=" + status +
                 ", dateTime=" + dateTime +
                 ", addressFrom=" + addressFrom +
@@ -117,9 +106,8 @@ public class OrderEntity {
         private UserEntity passenger;
         private CarEntity car;
         private SaleEntity sale;
-        private DiscountEntity discount;
         private OrderStatus status;
-        private LocalDateTime dateTime;
+        private String dateTime;
         private AddressEntity addressFrom;
         private AddressEntity addressTo;
         private TariffEntity tariff;
@@ -151,17 +139,12 @@ public class OrderEntity {
             return this;
         }
 
-        public Builder withDiscount(DiscountEntity discount) {
-            this.discount = discount;
-            return this;
-        }
-
         public Builder withOrderStatus(OrderStatus status) {
             this.status = status;
             return this;
         }
 
-        public Builder withDateTime(LocalDateTime dateTime) {
+        public Builder withDateTime(String dateTime) {
             this.dateTime = dateTime;
             return this;
         }

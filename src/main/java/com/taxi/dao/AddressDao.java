@@ -1,11 +1,10 @@
 package com.taxi.dao;
 
 import com.taxi.entity.AddressEntity;
-import com.taxi.entity.OrderEntity;
 
-import java.util.List;
+import java.util.Optional;
 
-public interface AddressDao extends CrudDao<AddressEntity>  {
-    List<OrderEntity> findByAddress(String address);
+public interface AddressDao extends CrudDao<AddressEntity> {
+    Optional<AddressEntity> findByAddress(String address);
 
 }

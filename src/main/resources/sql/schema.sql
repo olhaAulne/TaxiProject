@@ -1,124 +1,92 @@
-CREATE SCHEMA IF NOT EXISTS Taxi;
+DROP TABLE IF EXISTS address;
+DROP TABLE IF EXISTS car;
+DROP TABLE IF EXISTS tariff;
+DROP TABLE IF EXISTS sale;
+DROP TABLE IF EXISTS discount;
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS taxi_order;
 
 
-CREATE TABLE IF NOT EXISTS Address
+CREATE TABLE address
 (
-	id                   VARCHAR(20) NOT NULL,
-	departure            VARCHAR(30) NULL,
-	arriving             VARCHAR(30) NULL,
-	distance             DOUBLE NULL
+    id        VARCHAR(20) NOT NULL,
+    address   VARCHAR(50) NULL,
+    latitude  DOUBLE      NULL,
+    longitude DOUBLE      NULL,
+    PRIMARY KEY (id)
 );
 
-
-
-ALTER TABLE Address
-ADD PRIMARY KEY (id);
-
-
-
-CREATE TABLE IF NOT EXISTS Car
+CREATE TABLE car
 (
-	car_number           VARCHAR(8) NOT NULL,
-	year_of_issue        YEAR NULL,
-	model                VARCHAR(30) NULL,
-	color                VARCHAR(20) NULL,
-	availability         boolean NULL,
-	make                 VARCHAR(20) NULL
+    id            VARCHAR(20) NOT NULL,
+    description   VARCHAR(50) NULL,
+    car_number    VARCHAR(8)  NOT NULL,
+    driver_number VARCHAR(13) NULL,
+    seat          INT         NULL,
+    type          INT         NULL,
+    availability  INT         NOT NULL,
+    PRIMARY KEY (id)
 );
 
-
-
-ALTER TABLE Car
-ADD PRIMARY KEY (car_number);
-
-
-
-CREATE TABLE IF NOT EXISTS Order
+CREATE TABLE tariff
 (
-	id                   VARCHAR(20) NOT NULL,
-	order_status         VARCHAR(10) NULL,
-	order_date           DATE NULL,
-	id_user              VARCHAR(10) NULL,
-	id_sale              VARCHAR(10) NULL,
-	id_tariff            VARCHAR(10) NULL,
-	car_number           VARCHAR(8) NULL,
-	id_address           VARCHAR(20) NULL
+    id          VARCHAR(10) NOT NULL,
+    tariff_name VARCHAR(20) NULL,
+    price       INTEGER     NULL,
+    PRIMARY KEY (id)
 );
 
-
-
-ALTER TABLE Order
-ADD PRIMARY KEY (id);
-
-
-
-CREATE TABLE IF NOT EXISTS Special
+CREATE TABLE sale
 (
-	id                   VARCHAR(10) NOT NULL,
-	sale_amount          DOUBLE NULL,
-	sale_name            VARCHAR(20) NULL
+    id        VARCHAR(10) NOT NULL,
+    sale_name VARCHAR(20) NULL,
+    amount    DOUBLE      NULL,
+    PRIMARY KEY (id)
 );
 
-
-
-ALTER TABLE Special
-ADD PRIMARY KEY (id);
-
-
-
-CREATE TABLE IF NOT EXISTS Tariff
+CREATE TABLE discount
 (
-	id                   VARCHAR(10) NOT NULL,
-	price                INTEGER NULL
+    id      VARCHAR(10) NOT NULL,
+    user_id VARCHAR(20) NULL,
+    percent DOUBLE      NULL,
+    PRIMARY KEY (id)
 );
 
-
-
-ALTER TABLE Tariff
-ADD PRIMARY KEY (id);
-
-
-
-CREATE TABLE IF NOT EXISTS User
+CREATE TABLE user
 (
-	id                   VARCHAR(10) NOT NULL,
-	email                VARCHAR(64) NULL,
-	password             VARCHAR(20) NOT NULL,
-	name                 VARCHAR(20) NULL,
-	surname              VARCHAR(20) NULL,
-	phone_number         VARCHAR(13) NULL
+    id           VARCHAR(20) NOT NULL,
+    email        VARCHAR(64) NOT NULL,
+    password     VARCHAR(20) NOT NULL,
+    name         VARCHAR(20) NULL,
+    surname      VARCHAR(20) NULL,
+    phone_number VARCHAR(13) NULL,
+    birthday     DATE        NULL,
+    gender       VARCHAR(10) NULL,
+    role         INT         NULL,
+    PRIMARY KEY (id)
 );
 
-
-
-ALTER TABLE User
-ADD PRIMARY KEY (id);
-
-
-
-ALTER TABLE Order
-ADD FOREIGN KEY R_11 (id_user) REFERENCES User (id);
-
-
-
-ALTER TABLE Order
-ADD FOREIGN KEY R_12 (id_sale) REFERENCES Special (id);
-
-
-
-ALTER TABLE Order
-ADD FOREIGN KEY R_13 (id_tariff) REFERENCES Tariff (id);
-
-
-
-ALTER TABLE Order
-ADD FOREIGN KEY R_14 (car_number) REFERENCES Car (car_number);
-
-
-
-ALTER TABLE Order
-ADD FOREIGN KEY R_15 (id_address) REFERENCES Address (id);
-
+CREATE TABLE taxi_order
+(
+    id              VARCHAR(20) NOT NULL,
+    id_user         VARCHAR(20) NOT NULL,
+    id_car          VARCHAR(20) NOT NULL,
+    id_sale         VARCHAR(10) NULL,
+    id_discount     VARCHAR(10) NULL,
+    order_date      DATETIME    NULL,
+    id_address_from VARCHAR(20) NULL,
+    id_address_to   VARCHAR(20) NULL,
+    id_tariff       VARCHAR(10) NULL,
+    type            INT         NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (id_user) REFERENCES user (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_car) REFERENCES car (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_sale) REFERENCES sale (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_discount) REFERENCES discount (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_address_from) REFERENCES address (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_address_to) REFERENCES address (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_tariff) REFERENCES tariff (id) ON UPDATE CASCADE ON DELETE CASCADE
+);
 
 
 

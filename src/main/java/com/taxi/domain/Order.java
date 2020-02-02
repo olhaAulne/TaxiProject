@@ -1,10 +1,5 @@
 package com.taxi.domain;
 
-
-
-import java.time.Clock;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Objects;
 
 public class Order {
@@ -12,9 +7,8 @@ public class Order {
     private final User passenger;
     private final Car car;
     private final Sale sale;
-    private final Discount discount;
     private final OrderStatus status;
-    private final LocalDateTime dateTime;
+    private final String dateTime;
     private final Address addressFrom;
     private final Address addressTo;
     private final Tariff tariff;
@@ -24,9 +18,8 @@ public class Order {
         this.passenger = builder.passenger;
         this.car = builder.car;
         this.sale = builder.sale;
-        this.discount = builder.discount;
         this.status = builder.status;
-        this.dateTime = LocalDateTime.from(Clock.system(ZoneId.of("Europe/Kiev")).instant());
+        this.dateTime = builder.dateTime;
         this.addressFrom = builder.addressFrom;
         this.addressTo = builder.addressTo;
         this.tariff = builder.tariff;
@@ -52,11 +45,7 @@ public class Order {
         return status;
     }
 
-    public Discount getDiscount() {
-        return discount;
-    }
-
-    public LocalDateTime getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
@@ -85,7 +74,6 @@ public class Order {
                 Objects.equals(passenger, order.passenger) &&
                 Objects.equals(car, order.car) &&
                 Objects.equals(sale, order.sale) &&
-                Objects.equals(discount, order.discount) &&
                 status == order.status &&
                 Objects.equals(dateTime, order.dateTime) &&
                 Objects.equals(addressFrom, order.addressFrom) &&
@@ -95,7 +83,7 @@ public class Order {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, passenger, car, sale, discount, status, dateTime, addressFrom, addressTo, tariff);
+        return Objects.hash(id, passenger, car, sale, status, dateTime, addressFrom, addressTo, tariff);
     }
 
     @Override
@@ -105,7 +93,6 @@ public class Order {
                 ", passenger=" + passenger +
                 ", car=" + car +
                 ", sale=" + sale +
-                ", discount=" + discount +
                 ", status=" + status +
                 ", dateTime=" + dateTime +
                 ", addressFrom=" + addressFrom +
@@ -119,9 +106,8 @@ public class Order {
         private User passenger;
         private Car car;
         private Sale sale;
-        private Discount discount;
         private OrderStatus status;
-        private LocalDateTime dateTime;
+        private String dateTime;
         private Address addressFrom;
         private Address addressTo;
         private Tariff tariff;
@@ -153,17 +139,12 @@ public class Order {
             return this;
         }
 
-        public Builder withDiscount(Discount discount) {
-            this.discount = discount;
-            return this;
-        }
-
         public Builder withOrderStatus(OrderStatus status) {
             this.status = status;
             return this;
         }
 
-        public Builder withDateTime(LocalDateTime dateTime) {
+        public Builder withDateTime(String  dateTime) {
             this.dateTime = dateTime;
             return this;
         }
