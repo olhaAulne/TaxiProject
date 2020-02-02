@@ -1,8 +1,7 @@
 package com.taxi.dao;
 
-import com.taxi.entity.Address;
-import com.taxi.entity.Order;
+import com.taxi.entity.OrderEntity;
 
-public interface OrderDao extends CrudDao<Order> {
+public interface OrderDao extends CrudDao<OrderEntity> {
 
 }

@@ -2,13 +2,13 @@ package com.taxi.entity;
 
 import java.util.Objects;
 
-public class Address {
+public class AddressEntity {
     private final String id;
     private final String address;
     private final double latitude;
     private final double longitude;
 
-    public Address(Builder builder) {
+    public AddressEntity(Builder builder) {
         this.id = builder.id;
         this.address = builder.address;
         this.latitude = builder.latitude;
@@ -39,11 +39,11 @@ public class Address {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Address address1 = (Address) o;
-        return Double.compare(address1.latitude, latitude) == 0 &&
-                Double.compare(address1.longitude, longitude) == 0 &&
-                Objects.equals(id, address1.id) &&
-                Objects.equals(address, address1.address);
+        AddressEntity addressEntity1 = (AddressEntity) o;
+        return Double.compare(addressEntity1.latitude, latitude) == 0 &&
+                Double.compare(addressEntity1.longitude, longitude) == 0 &&
+                Objects.equals(id, addressEntity1.id) &&
+                Objects.equals(address, addressEntity1.address);
     }
 
     @Override
@@ -70,8 +70,8 @@ public class Address {
         private Builder() {
         }
 
-        public Address build() {
-            return new Address(this);
+        public AddressEntity build() {
+            return new AddressEntity(this);
         }
 
         public Builder withId(String id) {

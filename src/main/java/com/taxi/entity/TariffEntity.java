@@ -2,12 +2,12 @@ package com.taxi.entity;
 
 import java.util.Objects;
 
-public class Tariff {
+public class TariffEntity {
     private String id;
     private String name;
     private int price;
 
-    public Tariff(String id, String name, int price) {
+    public TariffEntity(String id, String name, int price) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -33,10 +33,10 @@ public class Tariff {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Tariff tariff = (Tariff) o;
-        return price == tariff.price &&
-                Objects.equals(id, tariff.id) &&
-                Objects.equals(name, tariff.name);
+        TariffEntity tariffEntity = (TariffEntity) o;
+        return price == tariffEntity.price &&
+                Objects.equals(id, tariffEntity.id) &&
+                Objects.equals(name, tariffEntity.name);
     }
 
     @Override

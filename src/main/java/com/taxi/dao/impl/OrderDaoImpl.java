@@ -1,21 +1,16 @@
 package com.taxi.dao.impl;
 
-import com.taxi.dao.AddressDao;
 import com.taxi.dao.C3poDataSource;
-import com.taxi.dao.ConnectorDB;
 import com.taxi.dao.OrderDao;
-import com.taxi.entity.Address;
-import com.taxi.entity.Order;
+import com.taxi.entity.OrderEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.List;
 
-public class OrderDaoImpl extends AbstractCrudDaoImpl<Order> implements OrderDao {
+public class OrderDaoImpl extends AbstractCrudDaoImpl<OrderEntity> implements OrderDao {
 
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM order WHERE id=?";
     private static final String FIND_ALL_QUERY = "SELECT * FROM order";
@@ -33,27 +28,17 @@ public class OrderDaoImpl extends AbstractCrudDaoImpl<Order> implements OrderDao
 
 
     @Override
-    public double countAmount(Order order) {
-        return 0;
-    }
-
-    @Override
-    public double countDistance(AddressDao from, Address to) {
-        return 0;
-    }
-
-    @Override
-    protected Order mapResultSetToEntity(ResultSet resultSet) throws SQLException {
+    protected OrderEntity mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         return null;
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Order entity) throws SQLException {
+    protected void prepareStatementForInsert(PreparedStatement statement, OrderEntity entity) throws SQLException {
 
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Order entity) throws SQLException {
+    protected void prepareStatementForUpdate(PreparedStatement statement, OrderEntity entity) throws SQLException {
 
     }
 }

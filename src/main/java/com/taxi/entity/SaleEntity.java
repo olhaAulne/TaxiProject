@@ -2,12 +2,12 @@ package com.taxi.entity;
 
 import java.util.Objects;
 
-public class Sale {
+public class SaleEntity {
     private String id;
     private String saleName;
     private double amount;
 
-    public Sale(String id, String saleName, double amount) {
+    public SaleEntity(String id, String saleName, double amount) {
         this.id = id;
         this.saleName = saleName;
         this.amount = amount;
@@ -27,12 +27,16 @@ public class Sale {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Sale sale = (Sale) o;
-        return Double.compare(sale.amount, amount) == 0 &&
-                Objects.equals(id, sale.id) &&
-                Objects.equals(saleName, sale.saleName);
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        SaleEntity saleEntity = (SaleEntity) o;
+        return Double.compare(saleEntity.amount, amount) == 0 &&
+                Objects.equals(id, saleEntity.id) &&
+                Objects.equals(saleName, saleEntity.saleName);
     }
 
     @Override

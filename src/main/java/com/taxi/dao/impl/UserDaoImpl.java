@@ -1,10 +1,9 @@
 package com.taxi.dao.impl;
 
 import com.taxi.dao.C3poDataSource;
-import com.taxi.dao.ConnectorDB;
 import com.taxi.dao.Page;
 import com.taxi.dao.UserDao;
-import com.taxi.entity.User;
+import com.taxi.entity.UserEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,7 +13,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
+public class UserDaoImpl extends AbstractCrudDaoImpl<UserEntity> implements UserDao {
 
     private static final String FIND_BY_EMAIL_QUERY = "SELECT * FROM user WHERE email=?";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM user WHERE id=?";
@@ -30,8 +29,8 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
         super(connector, FIND_BY_ID_QUERY, FIND_ALL_QUERY, SAVE_QUERY, UPDATE_QUERY, DELETE_BY_ID_QUERY, COUNT_RECORD);
     }
 
-    protected User mapResultSetToEntity(ResultSet resultSet) throws SQLException {
-        return User.builder()
+    protected UserEntity mapResultSetToEntity(ResultSet resultSet) throws SQLException {
+        return UserEntity.builder()
                 .withId(resultSet.getString("id"))
                 .withEmail(resultSet.getString("email"))
                 .withPassword(resultSet.getString("password"))
@@ -42,7 +41,7 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, User entity) throws SQLException {
+    protected void prepareStatementForInsert(PreparedStatement statement, UserEntity entity) throws SQLException {
         statement.setString(1, entity.getEmail());
         statement.setString(2, entity.getPassword());
         statement.setString(3, entity.getName());
@@ -52,18 +51,18 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, User entity) throws SQLException {
+    protected void prepareStatementForUpdate(PreparedStatement statement, UserEntity entity) throws SQLException {
         prepareStatementForInsert(statement,entity);
         statement.setString(6, entity.getId());
     }
 
 
     @Override
-    public Optional<User> findByEmail(String email) {
+    public Optional<UserEntity> findByEmail(String email) {
         return findByParam(email, FIND_BY_EMAIL_QUERY, STRING_PARAM_SETTER);
     }
     @Override
-    public List<User> findAll(Page page) {
+    public List<UserEntity> findAll(Page page) {
         return findAll(page);
     }
 

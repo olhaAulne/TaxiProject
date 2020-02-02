@@ -2,8 +2,8 @@ package com.taxi.dao.impl;
 
 import com.taxi.dao.AddressDao;
 import com.taxi.dao.C3poDataSource;
-import com.taxi.entity.Address;
-import com.taxi.entity.Order;
+import com.taxi.entity.AddressEntity;
+import com.taxi.entity.OrderEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,8 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public class AddressDaoImpl extends AbstractCrudDaoImpl<Address> implements AddressDao {
-    private static final String FIND_BY_EMAIL_QUERY = "SELECT * FROM address WHERE email=?";
+public class AddressDaoImpl extends AbstractCrudDaoImpl<AddressEntity> implements AddressDao {
+
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM address WHERE id=?";
     private static final String FIND_ALL_QUERY = "SELECT * FROM address";
     private static final String SAVE_QUERY = "INSERT INTO address (address, latitude, longitude ) values(?, ?, ?)";
@@ -28,22 +28,22 @@ public class AddressDaoImpl extends AbstractCrudDaoImpl<Address> implements Addr
     }
 
     @Override
-    public List<Order> findByAddress(String address) {
+    public List<OrderEntity> findByAddress(String address) {
         return null;
     }
 
     @Override
-    protected Address mapResultSetToEntity(ResultSet resultSet) throws SQLException {
+    protected AddressEntity mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         return null;
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Address entity) throws SQLException {
+    protected void prepareStatementForInsert(PreparedStatement statement, AddressEntity entity) throws SQLException {
 
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Address entity) throws SQLException {
+    protected void prepareStatementForUpdate(PreparedStatement statement, AddressEntity entity) throws SQLException {
 
     }
 }
