@@ -31,6 +31,10 @@ public class AddressEntity {
         return longitude;
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

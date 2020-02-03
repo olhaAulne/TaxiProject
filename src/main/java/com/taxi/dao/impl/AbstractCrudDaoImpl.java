@@ -3,6 +3,7 @@ package com.taxi.dao.impl;
 import com.taxi.dao.CrudDao;
 import com.taxi.dao.HikariConnection;
 import com.taxi.dao.exception.DataBaseSqlRuntimeException;
+import com.taxi.entity.OrderEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -116,5 +117,19 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
     public void deleteById(String id) {
         LOGGER.warn("Method don`t allowed");
         throw new UnsupportedOperationException();
+    }
+
+    public long count(String query) {
+        try (final PreparedStatement preparedStatement = connector.getConnection().prepareStatement(query)) {
+            try (final ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.error(String.format("Can't execute query [%s]", e));
+            throw new DataBaseSqlRuntimeException("", e);
+        }
+        return 0;
     }
 }

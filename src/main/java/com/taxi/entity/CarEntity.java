@@ -9,7 +9,7 @@ public class CarEntity {
     private final String driverNumber;
     private final int seat;
     private final CarType type;
-    private final boolean availability;
+    private final int availability;
 
     public CarEntity(Builder builder) {
         this.id = builder.id;
@@ -45,8 +45,12 @@ public class CarEntity {
         return type;
     }
 
-    public boolean isAvailability() {
+    public int getAvailability() {
         return availability;
+    }
+
+    public static Builder builder() {
+        return new Builder();
     }
 
     @Override
@@ -92,7 +96,7 @@ public class CarEntity {
         private String driverNumber;
         private int seat;
         private CarType type;
-        private boolean availability;
+        private int availability;
 
         private Builder() {
         }
@@ -126,12 +130,12 @@ public class CarEntity {
             return this;
         }
 
-        public Builder withSeat(CarType type) {
+        public Builder withType(CarType type) {
             this.type = type;
             return this;
         }
 
-        public Builder withAvailability(boolean availability) {
+        public Builder withAvailability(int availability) {
             this.availability = availability;
             return this;
         }

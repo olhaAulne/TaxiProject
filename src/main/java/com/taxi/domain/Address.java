@@ -1,5 +1,7 @@
 package com.taxi.domain;
 
+import com.taxi.entity.AddressEntity;
+
 import java.util.Objects;
 
 public class Address {
@@ -29,6 +31,10 @@ public class Address {
 
     public double getLongitude() {
         return longitude;
+    }
+
+    public static Builder builder() {
+        return new Builder();
     }
 
     @Override

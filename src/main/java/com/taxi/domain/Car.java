@@ -1,6 +1,6 @@
 package com.taxi.domain;
 
-import com.taxi.domain.CarType;
+import com.taxi.entity.UserEntity;
 
 import java.util.Objects;
 
@@ -11,7 +11,7 @@ public class Car {
     private final String driverNumber;
     private final int seat;
     private final CarType type;
-    private final boolean availability;
+    private final int availability;
 
     public Car(Builder builder) {
         this.id = builder.id;
@@ -47,8 +47,12 @@ public class Car {
         return type;
     }
 
-    public boolean isAvailability() {
+    public int getAvailability() {
         return availability;
+    }
+
+    public static Builder builder() {
+        return new Builder();
     }
 
     @Override
@@ -94,7 +98,7 @@ public class Car {
         private String driverNumber;
         private int seat;
         private CarType type;
-        private boolean availability;
+        private int availability;
 
         private Builder() {
         }
@@ -128,12 +132,12 @@ public class Car {
             return this;
         }
 
-        public Builder withSeat(CarType type) {
+        public Builder withType(CarType type) {
             this.type = type;
             return this;
         }
 
-        public Builder withAvailability(boolean availability) {
+        public Builder withAvailability(int availability) {
             this.availability = availability;
             return this;
         }

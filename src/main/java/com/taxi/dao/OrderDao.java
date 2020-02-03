@@ -5,6 +5,6 @@ import com.taxi.entity.UserEntity;
 
 import java.util.List;
 
-public interface OrderDao extends CrudDao<OrderEntity> {
-    List<OrderEntity> findByPassenger(UserEntity passenger);
+public interface OrderDao extends CrudPageableDao<OrderEntity> {
+    List<OrderEntity> findByPassenger(String userId);
 }
