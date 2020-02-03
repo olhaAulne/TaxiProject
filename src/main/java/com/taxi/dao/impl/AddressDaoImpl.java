@@ -46,7 +46,7 @@ public class AddressDaoImpl extends AbstractCrudDaoImpl<AddressEntity> implement
 
     @Override
     protected void prepareStatementForInsert(PreparedStatement statement, AddressEntity entity) throws SQLException {
-        statement.setString(1, entity.getAddress());
+        statement.setString(1, entity.getStreet());
         statement.setString(2, String.valueOf(entity.getLatitude()));
         statement.setString(3, String.valueOf(entity.getLongitude()));
     }

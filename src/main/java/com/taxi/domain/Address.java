@@ -1,18 +1,17 @@
 package com.taxi.domain;
 
-import com.taxi.entity.AddressEntity;
 
 import java.util.Objects;
 
 public class Address {
     private final String id;
-    private final String address;
+    private final String street;
     private final double latitude;
     private final double longitude;
 
     public Address(Builder builder) {
         this.id = builder.id;
-        this.address = builder.address;
+        this.street = builder.street;
         this.latitude = builder.latitude;
         this.longitude = builder.longitude;
     }
@@ -21,8 +20,8 @@ public class Address {
         return id;
     }
 
-    public String getAddress() {
-        return address;
+    public String getStreet() {
+        return street;
     }
 
     public double getLatitude() {
@@ -49,19 +48,19 @@ public class Address {
         return Double.compare(address1.latitude, latitude) == 0 &&
                 Double.compare(address1.longitude, longitude) == 0 &&
                 Objects.equals(id, address1.id) &&
-                Objects.equals(address, address1.address);
+                Objects.equals(street, address1.street);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, address, latitude, longitude);
+        return Objects.hash(id, street, latitude, longitude);
     }
 
     @Override
     public String toString() {
         return "Address{" +
                 "id='" + id + '\'' +
-                ", address='" + address + '\'' +
+                ", address='" + street + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 '}';
@@ -69,7 +68,7 @@ public class Address {
 
     public static class Builder {
         private String id;
-        private String address;
+        private String street;
         private double latitude;
         private double longitude;
 
@@ -85,8 +84,8 @@ public class Address {
             return this;
         }
 
-        public Builder withAddress(String address) {
-            this.address = address;
+        public Builder withAddress(String street) {
+            this.street = street;
             return this;
         }
 
