@@ -1,6 +1,6 @@
 package com.taxi.service.validator;
 
-import com.taxi.entity.UserEntity;
+import com.taxi.entity.User;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -16,7 +16,7 @@ public class UserValidatorTest {
     public void validatorShouldThrowExceptionIfPasswordIllegal() {
         expectedException.expect(ValidateException.class);
         expectedException.expectMessage("Password do not match the pattern");
-        UserEntity userEntity = UserEntity.builder()
+        User userEntity = User.builder()
                 .withEmail("email1@gmail.com")
                 .withPassword("")
                 .build();
@@ -27,7 +27,7 @@ public class UserValidatorTest {
     public void validatorShouldThrowExceptionIfEmailIllegal() {
         expectedException.expect(ValidateException.class);
         expectedException.expectMessage("Email do not match the pattern");
-        UserEntity userEntity = UserEntity.builder()
+        User userEntity = User.builder()
                 .withEmail("emailcom")
                 .withPassword("P@ssword1")
                 .build();
@@ -43,7 +43,7 @@ public class UserValidatorTest {
 
     @Test
     public void validatorShouldNotTrowException() {
-        UserEntity userEntity = UserEntity.builder()
+        User userEntity = User.builder()
                 .withEmail("email1@gmail.com")
                 .withPassword("P@ssword1")
                 .build();

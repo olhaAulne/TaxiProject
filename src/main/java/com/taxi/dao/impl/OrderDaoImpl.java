@@ -15,11 +15,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.taxi.dao.HikariConnection.getConnection;
+
 public class OrderDaoImpl extends AbstractCrudDaoImpl<OrderEntity> implements OrderDao {
 
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM taxi_order WHERE id=?";
-    private static final String FIND_BY_USER_ID_QUERY = "SELECT * FROM taxi_order WHERE id_user=?";
-    private static final String FIND_ALL_QUERY = "SELECT * FROM taxi_order";
+    private static final String FIND_ALL_QUERY = "SELECT * FROM taxi_order LIMIT ?, ?";
     private static final String SAVE_QUERY = "INSERT INTO taxi_order (id_user, id_car, id_sale, order_date, " +
             "id_address_from, id_address_to, id_tariff, type  ) values(?, ?, ?, ? ,?, ? ,?, ?)";
     private static final String UPDATE_QUERY = "UPDATE taxi_order SET id_user = ?, id_car = ?, id_sale = ?, order_date = ?, " +
@@ -29,7 +30,7 @@ public class OrderDaoImpl extends AbstractCrudDaoImpl<OrderEntity> implements Or
     private static final Logger LOGGER = LogManager.getLogger(OrderDaoImpl.class);
 
     public OrderDaoImpl(HikariConnection connector) {
-        super(connector, FIND_BY_ID_QUERY, FIND_ALL_QUERY, SAVE_QUERY, SAVE_QUERY);
+        super(connector, FIND_BY_ID_QUERY, FIND_ALL_QUERY, SAVE_QUERY, UPDATE_QUERY);
     }
 
     @Override
@@ -68,14 +69,13 @@ public class OrderDaoImpl extends AbstractCrudDaoImpl<OrderEntity> implements Or
 
     @Override
     public List<OrderEntity> findByPassenger(String userId) {
-        return null;
+        return Collections.emptyList();
     }
-
 
     @Override
     public List<OrderEntity> findAll(int page, int itemsPerPage) {
         try (final PreparedStatement preparedStatement =
-                     connector.getConnection().prepareStatement(FIND_ALL_QUERY)) {
+                     getConnection().prepareStatement(FIND_ALL_QUERY)) {
             preparedStatement.setInt(1, (page - 1) * itemsPerPage);
             preparedStatement.setInt(2, itemsPerPage);
 

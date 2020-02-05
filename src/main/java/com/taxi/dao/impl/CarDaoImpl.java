@@ -3,7 +3,6 @@ package com.taxi.dao.impl;
 import com.taxi.dao.CarDao;
 import com.taxi.dao.HikariConnection;
 import com.taxi.dao.exception.DataBaseSqlRuntimeException;
-import com.taxi.entity.AddressEntity;
 import com.taxi.entity.CarEntity;
 import com.taxi.entity.CarType;
 import org.apache.logging.log4j.LogManager;
@@ -16,11 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.taxi.dao.HikariConnection.getConnection;
+
 public class CarDaoImpl extends AbstractCrudDaoImpl<CarEntity> implements CarDao {
 
     private static final String FIND_BY_NUMBER_QUERY = "SELECT * FROM car WHERE number=?";
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM car WHERE id=?";
-    private static final String FIND_ALL_QUERY = "SELECT * FROM car";
+    private static final String FIND_ALL_QUERY = "SELECT * FROM car LIMIT ?, ?";
     private static final String SAVE_QUERY = "INSERT INTO car (description, car_number, driver_number, seat, " +
             "type, availability) values(?, ?, ?, ? ,?, ?)";
     private static final String UPDATE_QUERY = "UPDATE car SET description = ?, car_number = ?, driver_number = ?, " +
@@ -70,7 +71,7 @@ public class CarDaoImpl extends AbstractCrudDaoImpl<CarEntity> implements CarDao
     @Override
     public List<CarEntity> findAll(int page, int itemsPerPage) {
         try (final PreparedStatement preparedStatement =
-                     connector.getConnection().prepareStatement(FIND_ALL_QUERY)) {
+                     getConnection().prepareStatement(FIND_ALL_QUERY)) {
             preparedStatement.setInt(1, (page - 1) * itemsPerPage);
             preparedStatement.setInt(2, itemsPerPage);
 

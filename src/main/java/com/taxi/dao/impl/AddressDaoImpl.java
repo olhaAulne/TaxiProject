@@ -13,11 +13,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import static com.taxi.dao.HikariConnection.getConnection;
+
 
 public class AddressDaoImpl extends AbstractCrudDaoImpl<AddressEntity> implements AddressDao {
 
     private static final String FIND_BY_ID_QUERY = "SELECT * FROM address WHERE id=?";
-    private static final String FIND_ALL_QUERY = "SELECT * FROM address";
+    private static final String FIND_ALL_QUERY = "SELECT * FROM address LIMIT ?, ?";
     private static final String FIND_BY_ADDRESS_QUERY = "SELECT * FROM address WHERE address=?";
     private static final String SAVE_QUERY = "INSERT INTO address (address, latitude, longitude ) values(?, ?, ?)";
     private static final String UPDATE_QUERY = "UPDATE address SET address = ?, latitude = ?, longitude = ? WHERE id = ?";
@@ -59,8 +61,7 @@ public class AddressDaoImpl extends AbstractCrudDaoImpl<AddressEntity> implement
 
     @Override
     public List<AddressEntity> findAll(int page, int itemsPerPage) {
-        try (final PreparedStatement preparedStatement =
-                     connector.getConnection().prepareStatement(FIND_ALL_QUERY)) {
+        try (final PreparedStatement preparedStatement = getConnection().prepareStatement(FIND_ALL_QUERY)) {
             preparedStatement.setInt(1, (page - 1) * itemsPerPage);
             preparedStatement.setInt(2, itemsPerPage);
 

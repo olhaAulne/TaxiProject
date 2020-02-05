@@ -1,9 +1,9 @@
 package com.taxi.dao;
 
-import com.taxi.entity.UserEntity;
+import com.taxi.entity.User;
 
 import java.util.Optional;
 
-public interface UserDao extends CrudPageableDao<UserEntity> {
-    Optional<UserEntity> findByEmail(String email);
+public interface UserDao extends CrudPageableDao<User> {
+    Optional<User> findByEmail(String email);
 }

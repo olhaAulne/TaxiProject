@@ -3,7 +3,6 @@ package com.taxi.dao.impl;
 import com.taxi.dao.CrudDao;
 import com.taxi.dao.HikariConnection;
 import com.taxi.dao.exception.DataBaseSqlRuntimeException;
-import com.taxi.entity.OrderEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,6 +12,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
+import static com.taxi.dao.HikariConnection.getConnection;
+
 
 public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
     private static final Logger LOGGER = LogManager.getLogger(AbstractCrudDaoImpl.class);
@@ -21,8 +22,10 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
     private final String findAllQuery;
     private final String saveQuery;
     private final String updateQuery;
+    private static final String ERROR_MESSAGE = "Can't execute query [%s]";
 
-    public AbstractCrudDaoImpl(HikariConnection connector, String findByIdQuery, String findAllQuery, String saveQuery, String updateQuery) {
+    public AbstractCrudDaoImpl(HikariConnection connector, String findByIdQuery,
+                               String findAllQuery, String saveQuery, String updateQuery) {
         this.connector = connector;
         this.findByIdQuery = findByIdQuery;
         this.findAllQuery = findAllQuery;
@@ -48,7 +51,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
 
     protected <P> Optional<E> findByParam(P param, String findByParam, BiConsumer<PreparedStatement, P> designatedParamSetter) {
         try (final PreparedStatement preparedStatement =
-                     connector.getConnection().prepareStatement(findByParam)) {
+                     getConnection().prepareStatement(findByParam)) {
 
             designatedParamSetter.accept(preparedStatement, param);
 
@@ -59,8 +62,8 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
             }
 
         } catch (SQLException e) {
-            LOGGER.error("Search failed", e);
-            throw new DataBaseSqlRuntimeException("Search failed", e);
+            LOGGER.error(String.format(ERROR_MESSAGE, e));
+            throw new DataBaseSqlRuntimeException("", e);
         }
 
         return Optional.empty();
@@ -68,13 +71,12 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
 
     @Override
     public void save(E entity) {
-        try (final PreparedStatement preparedStatement =
-                     connector.getConnection().prepareStatement(saveQuery)) {
+        try (final PreparedStatement preparedStatement = getConnection().prepareStatement(saveQuery)) {
             prepareStatementForInsert(preparedStatement, entity);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error("Insert failed", e);
-            throw new DataBaseSqlRuntimeException("Insert failed", e);
+            LOGGER.error(String.format(ERROR_MESSAGE, e));
+            throw new DataBaseSqlRuntimeException("", e);
         }
     }
 
@@ -85,7 +87,7 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
 
     @Override
     public List findAll() {
-        try (Connection connection = connector.getConnection();
+        try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(findAllQuery)) {
             try (final ResultSet resultSet = preparedStatement.executeQuery()) {
                 List<E> entities = new ArrayList<>();
@@ -95,20 +97,19 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
                 return entities;
             }
         } catch (SQLException e) {
-            LOGGER.error("Search failed", e);
-            throw new DataBaseSqlRuntimeException("Search failed", e);
+            LOGGER.error(String.format(ERROR_MESSAGE, e));
+            throw new DataBaseSqlRuntimeException(" ", e);
         }
     }
 
     @Override
     public void updateById(E entity) {
-        try (final PreparedStatement preparedStatement =
-                     connector.getConnection().prepareStatement(updateQuery)) {
+        try (final PreparedStatement preparedStatement = getConnection().prepareStatement(updateQuery)) {
             prepareStatementForUpdate(preparedStatement, entity);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            LOGGER.error("Update failed", e);
-            throw new DataBaseSqlRuntimeException("Update failed", e);
+            LOGGER.error(String.format(ERROR_MESSAGE, e));
+            throw new DataBaseSqlRuntimeException(" ", e);
         }
 
     }
@@ -120,14 +121,14 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
     }
 
     public long count(String query) {
-        try (final PreparedStatement preparedStatement = connector.getConnection().prepareStatement(query)) {
+        try (final PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
             try (final ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     return resultSet.getInt(1);
                 }
             }
         } catch (SQLException e) {
-            LOGGER.error(String.format("Can't execute query [%s]", e));
+            LOGGER.error(String.format(ERROR_MESSAGE, e));
             throw new DataBaseSqlRuntimeException("", e);
         }
         return 0;

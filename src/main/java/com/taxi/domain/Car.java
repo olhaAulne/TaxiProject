@@ -1,7 +1,5 @@
 package com.taxi.domain;
 
-import com.taxi.entity.UserEntity;
-
 import java.util.Objects;
 
 public class Car {

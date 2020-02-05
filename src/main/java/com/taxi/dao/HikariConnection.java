@@ -22,7 +22,8 @@ public class HikariConnection {
     private static final String TIMEOUT = "db.timeout";
 
     private static final HikariConfig config = new HikariConfig();
-    private HikariDataSource ds;
+    private static HikariDataSource ds;
+
 
     public HikariConnection(String filename) {
         ResourceBundle resource = ResourceBundle.getBundle(filename);
@@ -32,16 +33,16 @@ public class HikariConnection {
         config.setPassword(resource.getString(PASSWORD));
         config.setMaximumPoolSize(Integer.parseInt(resource.getString(POOL_SIZE)));
         config.setConnectionTimeout(Integer.parseInt(resource.getString(TIMEOUT)));
-        this.ds = new HikariDataSource(config);
+        ds = new HikariDataSource(config);
 
     }
 
-    public Connection getConnection() {
+    public static Connection getConnection() {
         try {
             return ds.getConnection();
         } catch (SQLException e) {
-            LOGGER.error(String.format("Connection failed %s", e.getMessage()));
-            throw new IllegalStateException(String.format("Connection failed %s", ""), e);
+            LOGGER.error("Connection failed", e);
+            throw new IllegalStateException("Connection failed", e);
         }
     }
 
