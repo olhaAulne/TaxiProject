@@ -4,14 +4,14 @@ import java.util.Objects;
 
 public class OrderEntity {
     private final String id;
-    private final String passenger;
-    private final String car;
-    private final String sale;
+    private final UserEntity passenger;
+    private final CarEntity car;
+    private final SaleEntity sale;
     private final OrderStatus status;
     private final String dateTime;
-    private final String addressFrom;
-    private final String addressTo;
-    private final String tariff;
+    private final AddressEntity addressFrom;
+    private final AddressEntity addressTo;
+    private final TariffEntity tariff;
 
     public OrderEntity(Builder builder) {
         this.id = builder.id;
@@ -29,15 +29,15 @@ public class OrderEntity {
         return id;
     }
 
-    public String getPassenger() {
+    public UserEntity getPassenger() {
         return passenger;
     }
 
-    public String getCar() {
+    public CarEntity getCar() {
         return car;
     }
 
-    public String getSale() {
+    public SaleEntity getSale() {
         return sale;
     }
 
@@ -49,15 +49,15 @@ public class OrderEntity {
         return dateTime;
     }
 
-    public String getAddressFrom() {
+    public AddressEntity getAddressFrom() {
         return addressFrom;
     }
 
-    public String getAddressTo() {
+    public AddressEntity getAddressTo() {
         return addressTo;
     }
 
-    public String getTariff() {
+    public TariffEntity getTariff() {
         return tariff;
     }
 
@@ -107,14 +107,14 @@ public class OrderEntity {
 
     public static class Builder {
         private String id;
-        private String passenger;
-        private String car;
-        private String sale;
+        private UserEntity passenger;
+        private CarEntity car;
+        private SaleEntity sale;
         private OrderStatus status;
         private String dateTime;
-        private String addressFrom;
-        private String addressTo;
-        private String tariff;
+        private AddressEntity addressFrom;
+        private AddressEntity addressTo;
+        private TariffEntity tariff;
 
         private Builder() {
         }
@@ -128,17 +128,17 @@ public class OrderEntity {
             return this;
         }
 
-        public Builder withPassenger(String passenger) {
+        public Builder withPassenger(UserEntity passenger) {
             this.passenger = passenger;
             return this;
         }
 
-        public Builder withCar(String car) {
+        public Builder withCar(CarEntity car) {
             this.car = car;
             return this;
         }
 
-        public Builder withSale(String sale) {
+        public Builder withSale(SaleEntity sale) {
             this.sale = sale;
             return this;
         }
@@ -153,17 +153,17 @@ public class OrderEntity {
             return this;
         }
 
-        public Builder withAddressFrom(String addressFrom) {
+        public Builder withAddressFrom(AddressEntity addressFrom) {
             this.addressFrom = addressFrom;
             return this;
         }
 
-        public Builder withAddressTo(String addressTo) {
+        public Builder withAddressTo(AddressEntity addressTo) {
             this.addressTo = addressTo;
             return this;
         }
 
-        public Builder withTariff(String tariffEntity) {
+        public Builder withTariff(TariffEntity tariffEntity) {
             this.tariff = tariffEntity;
             return this;
         }

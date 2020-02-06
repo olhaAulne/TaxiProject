@@ -6,6 +6,7 @@
     <servlet>
         <servlet-name>userServlet</servlet-name>
         <servlet-class>com.taxi.controller.UserServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>userServlet</servlet-name>

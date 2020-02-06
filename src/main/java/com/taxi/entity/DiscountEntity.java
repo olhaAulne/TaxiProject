@@ -4,10 +4,10 @@ import java.util.Objects;
 
 public class DiscountEntity {
     private String id;
-    private User passenger;
+    private UserEntity passenger;
     private double percent;
 
-    public DiscountEntity(String id, User passenger, double percent) {
+    public DiscountEntity(String id, UserEntity passenger, double percent) {
         this.id = id;
         this.passenger = passenger;
         this.percent = percent;
@@ -17,7 +17,7 @@ public class DiscountEntity {
         return id;
     }
 
-    public User getPassenger() {
+    public UserEntity getPassenger() {
         return passenger;
     }
 

@@ -1,18 +1,17 @@
 package com.taxi.domain;
 
-
 import java.util.Objects;
 
 public class Order {
     private final String id;
-    private final String passenger;
-    private final String car;
-    private final String sale;
+    private final User passenger;
+    private final Car car;
+    private final Sale sale;
     private final OrderStatus status;
     private final String dateTime;
-    private final String addressFrom;
-    private final String addressTo;
-    private final String tariff;
+    private final Address addressFrom;
+    private final Address addressTo;
+    private final Tariff tariff;
 
     public Order(Builder builder) {
         this.id = builder.id;
@@ -30,15 +29,15 @@ public class Order {
         return id;
     }
 
-    public String getPassenger() {
+    public User getPassenger() {
         return passenger;
     }
 
-    public String getCar() {
+    public Car getCar() {
         return car;
     }
 
-    public String getSale() {
+    public Sale getSale() {
         return sale;
     }
 
@@ -50,15 +49,15 @@ public class Order {
         return dateTime;
     }
 
-    public String getAddressFrom() {
+    public Address getAddressFrom() {
         return addressFrom;
     }
 
-    public String getAddressTo() {
+    public Address getAddressTo() {
         return addressTo;
     }
 
-    public String getTariff() {
+    public Tariff getTariff() {
         return tariff;
     }
 
@@ -108,14 +107,14 @@ public class Order {
 
     public static class Builder {
         private String id;
-        private String passenger;
-        private String car;
-        private String sale;
+        private User passenger;
+        private Car car;
+        private Sale sale;
         private OrderStatus status;
         private String dateTime;
-        private String addressFrom;
-        private String addressTo;
-        private String tariff;
+        private Address addressFrom;
+        private Address addressTo;
+        private Tariff tariff;
 
         private Builder() {
         }
@@ -129,17 +128,17 @@ public class Order {
             return this;
         }
 
-        public Builder withPassenger(String passenger) {
+        public Builder withPassenger(User passenger) {
             this.passenger = passenger;
             return this;
         }
 
-        public Builder withCar(String car) {
+        public Builder withCar(Car car) {
             this.car = car;
             return this;
         }
 
-        public Builder withSale(String sale) {
+        public Builder withSale(Sale sale) {
             this.sale = sale;
             return this;
         }
@@ -154,17 +153,17 @@ public class Order {
             return this;
         }
 
-        public Builder withAddressFrom(String addressFrom) {
+        public Builder withAddressFrom(Address addressFrom) {
             this.addressFrom = addressFrom;
             return this;
         }
 
-        public Builder withAddressTo(String addressTo) {
+        public Builder withAddressTo(Address addressTo) {
             this.addressTo = addressTo;
             return this;
         }
 
-        public Builder withTariff(String tariffEntity) {
+        public Builder withTariff(Tariff tariffEntity) {
             this.tariff = tariffEntity;
             return this;
         }

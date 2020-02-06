@@ -3,8 +3,7 @@ package com.taxi.dao.impl;
 import com.taxi.dao.HikariConnection;
 import com.taxi.dao.OrderDao;
 import com.taxi.dao.exception.DataBaseSqlRuntimeException;
-import com.taxi.entity.OrderEntity;
-import com.taxi.entity.OrderStatus;
+import com.taxi.entity.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -37,26 +36,26 @@ public class OrderDaoImpl extends AbstractCrudDaoImpl<OrderEntity> implements Or
     protected OrderEntity mapResultSetToEntity(ResultSet resultSet) throws SQLException {
         return OrderEntity.builder()
                 .withId(resultSet.getString("id"))
-                .withPassenger(resultSet.getString("id_user"))
-                .withCar(resultSet.getString("id_car"))
-                .withSale(resultSet.getString("id_sale"))
+                .withPassenger(UserEntity.builder().withId(resultSet.getString("id_user")).build())
+                .withCar(CarEntity.builder().withId(resultSet.getString("id_car")).build())
+                .withSale(new SaleEntity(resultSet.getString("id_sale"), null, 0))
                 .withDateTime(resultSet.getString("order_date"))
-                .withAddressFrom(resultSet.getString("id_address_from"))
-                .withAddressTo(resultSet.getString("id_address_to"))
-                .withTariff(resultSet.getString("id_tariff"))
+                .withAddressFrom(AddressEntity.builder().withId(resultSet.getString("id_address_from")).build())
+                .withAddressTo(AddressEntity.builder().withId(resultSet.getString("id_address_to")).build())
+                .withTariff(new TariffEntity(resultSet.getString("id_tariff"), null, 0))
                 .withOrderStatus(OrderStatus.values()[resultSet.getInt("type") - 1])
                 .build();
     }
 
     @Override
     protected void prepareStatementForInsert(PreparedStatement statement, OrderEntity entity) throws SQLException {
-        statement.setString(1, entity.getPassenger());
-        statement.setString(2, entity.getCar());
-        statement.setString(3, entity.getSale());
+        statement.setString(1, entity.getPassenger().getId());
+        statement.setString(2, entity.getCar().getId());
+        statement.setString(3, entity.getSale().getId());
         statement.setString(4, entity.getDateTime());
-        statement.setString(5, entity.getAddressFrom());
-        statement.setString(6, entity.getAddressTo());
-        statement.setString(7, entity.getTariff());
+        statement.setString(5, entity.getAddressFrom().getId());
+        statement.setString(6, entity.getAddressTo().getId());
+        statement.setString(7, entity.getTariff().getId());
         statement.setString(8, String.valueOf(entity.getStatus()));
 
     }
@@ -65,11 +64,6 @@ public class OrderDaoImpl extends AbstractCrudDaoImpl<OrderEntity> implements Or
     protected void prepareStatementForUpdate(PreparedStatement statement, OrderEntity entity) throws SQLException {
         prepareStatementForInsert(statement, entity);
         statement.setString(9, entity.getId());
-    }
-
-    @Override
-    public List<OrderEntity> findByPassenger(String userId) {
-        return Collections.emptyList();
     }
 
     @Override

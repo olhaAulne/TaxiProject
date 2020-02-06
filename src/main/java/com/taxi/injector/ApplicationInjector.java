@@ -26,7 +26,7 @@ public class ApplicationInjector {
 
     private static final PasswordEncryptor PASSWORD_ENCRYPTOR = new PasswordEncryptor();
 
-    private static final UserMapper USER_MAPPER = new UserMapper(PASSWORD_ENCRYPTOR);
+    private static final UserMapper USER_MAPPER = new UserMapper();
 
     private static final Validator<User> USER_VALIDATOR = new UserValidator();
 

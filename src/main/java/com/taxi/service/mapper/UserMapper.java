@@ -1,27 +1,20 @@
 package com.taxi.service.mapper;
 
-import com.taxi.entity.User;
-import com.taxi.service.PasswordEncryptor;
+import com.taxi.entity.UserEntity;
 
 public class UserMapper {
 
-    private final PasswordEncryptor passwordEncryptor;
-
-    public UserMapper(PasswordEncryptor passwordEncryptor) {
-        this.passwordEncryptor = passwordEncryptor;
-    }
-
-    public User mapUserToUserEntity(com.taxi.domain.User user) {
-        return User.builder()
+    public UserEntity mapUserToUserEntity(com.taxi.domain.User user) {
+        return UserEntity.builder()
                 .withId(user.getId())
                 .withName(user.getName())
                 .withSurname(user.getSurname())
                 .withEmail(user.getEmail())
-                .withPassword(passwordEncryptor.encrypt(user.getPassword()))
+                .withPassword(user.getPassword())
                 .build();
     }
 
-    public com.taxi.domain.User mapUserEntityToUser(User userEntity) {
+    public com.taxi.domain.User mapUserEntityToUser(UserEntity userEntity) {
         return com.taxi.domain.User.builder()
                 .withId(userEntity.getId())
                 .withName(userEntity.getName())

@@ -3,7 +3,7 @@ package com.taxi.entity;
 import java.sql.Date;
 import java.util.Objects;
 
-public class User {
+public class UserEntity {
     private final String id;
     private final String email;
     private final String password;
@@ -14,7 +14,7 @@ public class User {
     private final String gender;
     private final Role role;
 
-    private User(Builder builder) {
+    private UserEntity(Builder builder) {
         this.id = builder.id;
         this.email = builder.email;
         this.password = builder.password;
@@ -74,7 +74,7 @@ public class User {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        User userEntity = (User) o;
+        UserEntity userEntity = (UserEntity) o;
         return Objects.equals(id, userEntity.id) &&
                 Objects.equals(email, userEntity.email) &&
                 Objects.equals(password, userEntity.password) &&
@@ -120,8 +120,8 @@ public class User {
         private Builder() {
         }
 
-        public User build() {
-            return new User(this);
+        public UserEntity build() {
+            return new UserEntity(this);
         }
 
         public Builder withId(String id) {
