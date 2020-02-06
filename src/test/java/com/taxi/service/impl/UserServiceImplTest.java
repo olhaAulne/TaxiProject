@@ -4,7 +4,6 @@ import com.taxi.dao.UserDao;
 import com.taxi.domain.User;
 import com.taxi.entity.UserEntity;
 import com.taxi.service.PasswordEncryptor;
-import com.taxi.service.exception.EntityNotFoundException;
 import com.taxi.service.mapper.UserMapper;
 import com.taxi.service.validator.Validator;
 import org.junit.After;
@@ -25,7 +24,7 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceImplTest {
     private static final String USER_EMAIL = "email@gmail.com";
-    private static final String INCORRECT_USER_EMAIL = "incorrrect_user@email.com";
+    private static final String INCORRECT_USER_EMAIL = "incorrrect@email.com";
     private static final String USER_PASSWORD = "password";
     private static final String ENCODED_PASSWORD = "encoded_password";
     private static final String INCORRECT_PASSWORD = "INCORRECT_PASSWORD";

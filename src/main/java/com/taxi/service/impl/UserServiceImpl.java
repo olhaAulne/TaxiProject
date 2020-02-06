@@ -32,9 +32,9 @@ public class UserServiceImpl implements UserService {
     public void register(User user) {
         validator.validate(user);
         User encryptedUser = User.copyUser(user);
-       if(userDao.findByEmail(encryptedUser.getEmail()).isPresent()){
-           throw new EntityAlreadyExistException(String.format("User %s is already exist", encryptedUser.getEmail()));
-       }
+        if (userDao.findByEmail(encryptedUser.getEmail()).isPresent()) {
+            throw new EntityAlreadyExistException(String.format("User %s is already exist", encryptedUser.getEmail()));
+        }
         userDao.save(userMapper.mapUserToUserEntity(encryptedUser));
     }
 
@@ -43,15 +43,17 @@ public class UserServiceImpl implements UserService {
         final Optional<User> user = userDao.findByEmail(email).map(userMapper::mapUserEntityToUser);
         if (user.isPresent()) {
             String encryptedPassword = passwordEncryptor.encrypt(password);
-            if (encryptedPassword.equals(user.get().getPassword()))
+            if (encryptedPassword.equals(user.get().getPassword())) {
                 return user;
+            }
         }
-        return Optional.empty();
+        throw new EntityAlreadyExistException(String.format("User %s is not exist", email));
+
     }
 
     @Override
     public List<User> findAll(int pageNumber) {
-        return userDao.findAll(pageNumber,USERS_PER_PAGE).stream()
+        return userDao.findAll(pageNumber, USERS_PER_PAGE).stream()
                 .map(userMapper::mapUserEntityToUser)
                 .collect(Collectors.toList());
     }
