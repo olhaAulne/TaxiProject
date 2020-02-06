@@ -1,5 +1,7 @@
 package com.taxi.domain;
 
+import com.taxi.service.PasswordEncryptor;
+
 import java.sql.Date;
 import java.util.Objects;
 
@@ -64,6 +66,21 @@ public class User {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    public static User copyUser(User user){
+        PasswordEncryptor passwordEncryptor = new PasswordEncryptor();
+        return new User.Builder()
+                .withId(user.getId())
+                .withEmail(user.getEmail())
+                .withPassword(passwordEncryptor.encrypt(user.getPassword()))
+                .withName(user.getName())
+                .withSurname(user.getSurname())
+                .withPhone(user.getTelephoneNumber())
+                .withRole(user.getRole())
+                .withBirthday(user.getBirthday())
+                .withGender(user.getGender())
+                .build();
     }
 
     @Override

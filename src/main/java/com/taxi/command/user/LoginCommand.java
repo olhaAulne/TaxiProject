@@ -6,6 +6,7 @@ import com.taxi.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 public class LoginCommand implements Command {
 
@@ -19,9 +20,13 @@ public class LoginCommand implements Command {
     public String execute(HttpServletRequest request) {
         final String email = (String) request.getAttribute("email");
         final String password = (String) request.getAttribute("password");
-        final User user = userService.login(email, password);
-        final HttpSession session = request.getSession();
-        session.setAttribute("user", user);
-        return "view/profile.jsp";
+        final Optional<User> user = userService.login(email, password);
+
+        if (user.isPresent()) {
+            final HttpSession session = request.getSession();
+            session.setAttribute("user", user.get());
+            return "view/profile.jsp";
+        }
+        return "view/login.jsp";
     }
 }

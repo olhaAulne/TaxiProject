@@ -1,16 +1,28 @@
 package com.taxi.service.validator;
 
 import com.taxi.entity.UserEntity;
+import com.taxi.service.PasswordEncryptor;
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
+import static org.mockito.Mockito.reset;
+
+@RunWith(MockitoJUnitRunner.class)
 public class UserValidatorTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
+    @Mock
+    private Validator userValidator;
 
-    private static Validator userValidator = new UserValidator();
-
+    @After
+    public void resetMocks() {
+        reset(userValidator);
+    }
 
     @Test
     public void validatorShouldThrowExceptionIfPasswordIllegal() {
